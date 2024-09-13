@@ -88,7 +88,7 @@
         </div>
         
         <div class="link-group">
-            <a href="/create-account">Create an Account</a>
+            <a href="/create.htm">Create an Account</a>
         </div>
     </div>
 
