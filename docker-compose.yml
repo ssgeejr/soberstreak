@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+# ####### MYSQL #######
+    ssdb:
+        image: mysql:5.7
+        container_name: ssdb
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'soberstreak'
+            MYSQL_USER: 'tomcat'
+            MYSQL_PASSWORD: 'readwrite'
+            MYSQL_ROOT_PASSWORD: 'teamrocket'
+        volumes:
+            - /opt/apps/ssdb/mysql:/var/lib/mysql
+            - ./mysql:/docker-entrypoint-initdb.d/:ro
+
+    ssui:
+        image: soberstreakui:1
+        container_name: ssui
+        ports:
+            - 80:8080
+            - 443:8443
+
