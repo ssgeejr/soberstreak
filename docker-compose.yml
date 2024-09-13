@@ -16,9 +16,11 @@ services:
             - ./mysql:/docker-entrypoint-initdb.d/:ro
 
     ssui:
-        image: soberstreakui:1
+        image: soberstreak:1
         container_name: ssui
         ports:
             - 80:8080
             - 443:8443
+        depends_on:
+            - ssdb
 

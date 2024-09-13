@@ -1,0 +1,19 @@
+#!/bin/bash
+cd /opt/pasedb
+echo "... pulling new changes ..."
+git pull
+
+echo "... stopping docker container UI ..."
+#docker-compose stop ssui
+
+echo "... building new container ..."
+mvn clean package
+cd docker
+docker build -t soberstreak:1 .
+cd ..
+
+echo "... removing old container ..."
+docker rm ssui
+
+echo "... redeploysing newest build ..."
+#docker-compose up -d ui
