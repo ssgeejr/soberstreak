@@ -39,6 +39,10 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        .input-group small {
+            color: red;
+            display: none;
+        }
         .button-group {
             margin-top: 20px;
         }
@@ -55,18 +59,6 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
-        .link-group {
-            margin-top: 15px;
-        }
-        .link-group a {
-            color: #007bff;
-            text-decoration: none;
-            display: block;
-            margin-top: 10px;
-        }
-        .link-group a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -77,16 +69,19 @@
         <div class="input-group">
             <label for="username">Username</label>
             <input type="text" id="username" required>
+            <small id="usernameError">Username must be between 8 and 24 characters.</small>
         </div>
 
         <div class="input-group">
             <label for="name">Name</label>
             <input type="text" id="name" required>
+            <small id="nameError">Name must be between 12 and 32 characters.</small>
         </div>
 
         <div class="input-group">
             <label for="password">Password</label>
             <input type="password" id="password" required>
+            <small id="passwordError">Password must be at least 12 characters long, contain a number, an uppercase letter, and a special character.</small>
         </div>
 
         <div class="input-group">
@@ -97,6 +92,7 @@
         <div class="input-group">
             <label for="confirm_email">Confirm Email Address</label>
             <input type="email" id="confirm_email" required>
+            <small id="emailError">Emails do not match.</small>
         </div>
 
         <div class="button-group">
@@ -112,10 +108,33 @@
         const confirmEmail = document.getElementById('confirm_email');
         const createAccountBtn = document.getElementById('createAccountBtn');
 
-        // Function to check if all fields are filled and email matches
+        const usernameError = document.getElementById('usernameError');
+        const nameError = document.getElementById('nameError');
+        const passwordError = document.getElementById('passwordError');
+        const emailError = document.getElementById('emailError');
+
+        // Regex for password validation: at least one uppercase, one lowercase, one digit, one special char
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/;
+
         function validateForm() {
-            const isFormValid = username.value && nameField.value && password.value && email.value && confirmEmail.value && (email.value === confirmEmail.value);
-            createAccountBtn.disabled = !isFormValid;
+            // Username validation: between 8 and 24 characters
+            const isUsernameValid = username.value.length >= 8 && username.value.length <= 24;
+            usernameError.style.display = isUsernameValid ? 'none' : 'block';
+
+            // Name validation: between 12 and 32 characters
+            const isNameValid = nameField.value.length >= 12 && nameField.value.length < 32;
+            nameError.style.display = isNameValid ? 'none' : 'block';
+
+            // Password validation: at least 12 characters, a number, an uppercase letter, and a special character
+            const isPasswordValid = passwordRegex.test(password.value);
+            passwordError.style.display = isPasswordValid ? 'none' : 'block';
+
+            // Email matching validation
+            const isEmailValid = email.value === confirmEmail.value;
+            emailError.style.display = isEmailValid ? 'none' : 'block';
+
+            // Enable the Create Account button if all validations pass
+            createAccountBtn.disabled = !(isUsernameValid && isNameValid && isPasswordValid && isEmailValid);
         }
 
         // Add event listeners to fields to validate form on input
