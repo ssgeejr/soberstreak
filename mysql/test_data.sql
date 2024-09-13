@@ -1,5 +1,5 @@
-INSERT INTO users (name, sobriety_date, amount_per_day) 
-VALUES ('Kale Kimo', '2016-06-22', 22.00);
+INSERT INTO users (name, sobriety_date, amount_per_day, password)
+VALUES ('Kale Kimo', '2016-06-22', 22.00, MD5('password123'));
 
 
 SELECT 
@@ -20,4 +20,8 @@ ORDER BY
 	
 	
 	
-	
+SELECT *
+FROM users
+WHERE username = 'provided_username'
+  AND password = MD5('provided_password')
+  AND validated = 1;
