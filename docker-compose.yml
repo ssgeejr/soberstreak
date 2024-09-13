@@ -14,6 +14,8 @@ services:
         volumes:
             - /opt/apps/ssdb/mysql:/var/lib/mysql
             - ./mysql:/docker-entrypoint-initdb.d/:ro
+        ports:
+            - 3306:3306
 
     ssui:
         image: soberstreak:1
