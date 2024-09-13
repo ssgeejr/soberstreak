@@ -5,6 +5,10 @@ USE soberstreak;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    validated TINYINT(1) NOT NULL DEFAULT 0,
+    username VARCHAR(32) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     sobriety_date DATE NOT NULL,
     amount_per_day DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
