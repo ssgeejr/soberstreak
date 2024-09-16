@@ -33,49 +33,6 @@ public class UserLogin {
     	
     }
 
-    // Method to validate credentials and return an ActiveUserItem object
-    public ActiveUserItem validateUser() throws SQLException {
-    	String username = "kalekimo";
-    	String password = "mypassword";
-        
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://bedlam:3306/soberstreak", "tomcat", "readwrite");) {
-
-            // Query to check if the user exists with the provided username and password
-            
-        	
-            String query = "SELECT name, sobriety_date, amount_per_day FROM users WHERE username = ? AND password = MD5(?) AND validated = 1";
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-             
-            ResultSet rs = stmt.executeQuery();
-
-            // If user is found, proceed to calculate sobriety stats
-            if (rs.next()) {
-                String name = rs.getString("name");
-                LocalDate sobrietyDate = rs.getDate("sobriety_date").toLocalDate();
-                double amountPerDay = rs.getDouble("amount_per_day");
-
-                // Calculate days sober
-                LocalDate today = LocalDate.now();
-                long daysSober = ChronoUnit.DAYS.between(sobrietyDate, today);
-
-                // Calculate amount saved
-                double amountSaved = amountPerDay * daysSober;
-
-                // Fetch milestones
-                List<Milestone> milestones = fetchMilestones(connection);
-
-                // Return ActiveUserItem object with user data
-                return new ActiveUserItem(username, name, daysSober, amountSaved, milestones);
-            }
-
-            // If no valid user is found, return null
-            return null;
-        }
-    }
-
- 
 
     // Method to validate credentials and return an ActiveUserItem object
     public static ActiveUserItem validateUser(String username, String password) throws Exception {
@@ -89,7 +46,24 @@ public class UserLogin {
 
             // Query to check if the user exists with the provided username and password
             
-            String query = "SELECT name, sobriety_date, amount_per_day FROM users WHERE username = ? AND password = MD5(?) AND validated = 1";
+            String query = "SELECT"
+            	    +" u.username as uname,"
+            	    +" u.sobriety_date as sdate,"
+            	    +" DATEDIFF(CURDATE(), u.sobriety_date) AS days_sober,"
+            	    +" m.milestone_message as mmsg,"
+            	    +" m.milestone_days as mdays,"
+            	    +" m.image_url as mimg,"
+            	    +" (DATEDIFF(CURDATE(), u.sobriety_date) * u.amount_per_day) AS money_saved"
+            	    +" FROM "
+            	    +" users u"
+            	    +" JOIN "
+            	    +" milestones m"
+            	    +" ON "
+            	    +" DATEDIFF(CURDATE(), u.sobriety_date) >= m.milestone_days"
+            	    +" where u.username = ?"
+            	    +" and u.password = MD5(?)"
+            	    +" ORDER BY "
+            	    +" u.name, m.milestone_days";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -99,24 +73,18 @@ public class UserLogin {
 
             // If user is found, proceed to calculate sobriety stats
             if (rs.next()) {
-                String name = rs.getString("name");
-                LocalDate sobrietyDate = rs.getDate("sobriety_date").toLocalDate();
-                double amountPerDay = rs.getDouble("amount_per_day");
-
-                // Calculate days sober
-                LocalDate today = LocalDate.now();
-                long daysSober = ChronoUnit.DAYS.between(sobrietyDate, today);
-
-                // Calculate amount saved
-                double amountSaved = amountPerDay * daysSober;
-
-                // Fetch milestones
-                List<Milestone> milestones = fetchMilestones(connection);
-
-                // Return ActiveUserItem object with user data
-//                System.out.println("--- RETURNING VALUE ----");
-                
-                return new ActiveUserItem(username, name, daysSober, amountSaved, milestones);
+            	List<Milestone> milestones = new ArrayList<>();
+                String name = rs.getString("uname");
+                String sobrietyDate = rs.getString("sdate");
+                double amountSaved = rs.getDouble("money_saved");
+                int daysSober =  rs.getInt("days_sober");
+                milestones.add(new Milestone(rs.getInt("mdays"), rs.getString("mmsg"), rs.getString("mimg")));
+                while (rs.next()) {
+                	milestones.add(new Milestone(rs.getInt("mdays"), rs.getString("mmsg"), rs.getString("mimg")));  
+                }
+               
+                return new ActiveUserItem("", "", "", 1, 1.1, milestones);
+//                return new ActiveUserItem(username, name, sobrietyDate, daysSober, amountSaved, milestones);
             }
 
             // If no valid user is found, return null
@@ -125,21 +93,21 @@ public class UserLogin {
     }
 
     // Method to fetch milestones from the database
-    private static List<Milestone> fetchMilestones(Connection connection, int soberdays) throws SQLException {
-        String query = "SELECT milestone_days, milestone_message, image_url FROM milestones where milestone_days <= ? ORDER BY milestone_days ASC";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setInt(1,soberdays);
-        ResultSet rs = pstmt.executeQuery();
-
-        List<Milestone> milestones = new ArrayList<>();
-        while (rs.next()) {
-            int milestoneDays = rs.getInt("milestone_days");
-            String milestoneMessage = rs.getString("milestone_message");
-            String imageUrl = rs.getString("image_url");
-            milestones.add(new Milestone(milestoneDays, milestoneMessage, imageUrl));
-        }
-        return milestones;
-    }
-
+//    private static List<Milestone> fetchMilestones(Connection connection, int soberdays) throws SQLException {
+//        String query = "SELECT milestone_days, milestone_message, image_url FROM milestones where milestone_days <= ? ORDER BY milestone_days ASC";
+//        PreparedStatement pstmt = connection.prepareStatement(query);
+//        pstmt.setInt(1,soberdays);
+//        ResultSet rs = pstmt.executeQuery();
+//
+//        List<Milestone> milestones = new ArrayList<>();
+//        while (rs.next()) {
+//            int milestoneDays = rs.getInt("milestone_days");
+//            String milestoneMessage = rs.getString("milestone_message");
+//            String imageUrl = rs.getString("image_url");
+//            milestones.add(new Milestone(milestoneDays, milestoneMessage, imageUrl));
+//        }
+//        return milestones;
+//    }
+//
 
 }

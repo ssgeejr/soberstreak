@@ -6,14 +6,14 @@ import java.util.*;
 public class UserService {
     public UserService(){
         try{
-        	UserLogin ulogin = new UserLogin();
-        	ActiveUserItem aui = ulogin.validateUser();
-        	System.out.println(aui.getUsername());
-        	System.out.println(aui.getDaysSober());
-        	List<Milestone> mlist = aui.getMilestones();
-        	for (Milestone milestone : mlist) {
-        	    System.out.println(milestone.getMilestoneMessage());  // Example operation
-        	}
+//        	UserLogin ulogin = new UserLogin();
+//        	ActiveUserItem aui = ulogin.validateUser();
+//        	System.out.println(aui.getUsername());
+//        	System.out.println(aui.getDaysSober());
+//        	List<Milestone> mlist = aui.getMilestones();
+//        	for (Milestone milestone : mlist) {
+//        	    System.out.println(milestone.getMilestoneMessage());  // Example operation
+//        	}
         }catch(Exception ex){
             System.out.println(ex);
         }

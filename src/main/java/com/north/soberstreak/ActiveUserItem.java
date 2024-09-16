@@ -5,14 +5,16 @@ import java.util.List;
 public class ActiveUserItem {
     private String username;
     private String name;
-    private long daysSober;
+    private String soberDate;
+    private int daysSober;
     private double amountSaved;
     private List<Milestone> milestones;
 
     // Constructor
-    public ActiveUserItem(String username, String name, long daysSober, double amountSaved, List<Milestone> milestones) {
+    public ActiveUserItem(String username, String name, String sDate, int daysSober, double amountSaved, List<Milestone> milestones) {
         this.username = username;
         this.name = name;
+        this.soberDate = sDate;
         this.daysSober = daysSober;
         this.amountSaved = amountSaved;
         this.milestones = milestones;
@@ -22,12 +24,15 @@ public class ActiveUserItem {
     public String getUsername() {
         return username;
     }
-
+    
+    public String getSobrietyDate() {
+        return soberDate;
+    }
     public String getName() {
         return name;
     }
 
-    public long getDaysSober() {
+    public int getDaysSober() {
         return daysSober;
     }
 
