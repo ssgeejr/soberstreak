@@ -125,9 +125,10 @@ public class UserLogin {
     }
 
     // Method to fetch milestones from the database
-    private static List<Milestone> fetchMilestones(Connection connection) throws SQLException {
-        String query = "SELECT milestone_days, milestone_message, image_url FROM milestones ORDER BY milestone_days ASC";
-        PreparedStatement stmt = connection.prepareStatement(query);
+    private static List<Milestone> fetchMilestones(Connection connection, int soberdays) throws SQLException {
+        String query = "SELECT milestone_days, milestone_message, image_url FROM milestones where milestone_days <= ? ORDER BY milestone_days ASC";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1,soberdays);
         ResultSet rs = stmt.executeQuery();
 
         List<Milestone> milestones = new ArrayList<>();
