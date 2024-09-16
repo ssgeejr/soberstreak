@@ -83,6 +83,8 @@ public class UserLogin {
        Context initContext = new InitialContext();
        Context envContext = (Context) initContext.lookup("java:/comp/env");
        dataSource = (DataSource) envContext.lookup("jdbc/soberstreakdc");
+       
+       System.out.println("--------- ActiveUserItem ----------------");
        try (Connection connection = dataSource.getConnection()) {
 
             // Query to check if the user exists with the provided username and password
@@ -112,6 +114,8 @@ public class UserLogin {
                 List<Milestone> milestones = fetchMilestones(connection);
 
                 // Return ActiveUserItem object with user data
+                System.out.println("--- RETURNING VALUE ----");
+                
                 return new ActiveUserItem(username, name, daysSober, amountSaved, milestones);
             }
 
