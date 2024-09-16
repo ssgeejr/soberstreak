@@ -83,8 +83,8 @@ public class UserLogin {
                 	milestones.add(new Milestone(rs.getInt("mdays"), rs.getString("mmsg"), rs.getString("mimg")));  
                 }
                
-                return new ActiveUserItem("", "", "", 1, 1.1, milestones);
-//                return new ActiveUserItem(username, name, sobrietyDate, daysSober, amountSaved, milestones);
+//                return new ActiveUserItem("", "", "", 1, 1.1, milestones);
+                return new ActiveUserItem(username, name, sobrietyDate, daysSober, amountSaved, milestones);
             }
 
             // If no valid user is found, return null
