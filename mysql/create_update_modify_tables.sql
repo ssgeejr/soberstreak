@@ -1,21 +1,3 @@
-SET GLOBAL time_zone = 'America/Chicago';
-
-USE soberstreak;
-
-CREATE TABLE users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    validated TINYINT(1) NOT NULL DEFAULT 0,
-    username VARCHAR(32) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    sobriety_date DATE NOT NULL,
-    amount_per_day DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
-
 CREATE TABLE milestones (
     milestone_id INT AUTO_INCREMENT PRIMARY KEY,
     milestone_days INT NOT NULL,
@@ -24,7 +6,6 @@ CREATE TABLE milestones (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 
 INSERT INTO milestones (milestone_days, milestone_message, image_url) VALUES
 (1, "Congratulations on 24 hours sober! The first day is the hardest.", "https://example.com/images/24_hours.png"),
@@ -73,8 +54,3 @@ INSERT INTO milestones (milestone_days, milestone_message, image_url) VALUES
 (10220, "Twenty-eight years sober! Your journey inspires many.", "https://example.com/images/28_years.png"),
 (10585, "Twenty-nine years sober! You’ve come so far.", "https://example.com/images/29_years.png"),
 (10950, "Thirty years sober! Three decades of dedication and strength.", "https://example.com/images/30_years.png");
-
-
-
-
-
