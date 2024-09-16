@@ -73,38 +73,28 @@
     <div class="container">
         <h1>Welcome to Sober Streak</h1>
         
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        
-        <div class="button-group">
-            <button type="button" onclick="login()">Login</button>
-        </div>
-        
+        <!-- Wrap input fields inside a form element -->
+        <form id="loginForm" action="activeuser.jsp" method="POST">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="button-group">
+                <!-- Use button type="submit" to submit the form -->
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
         <div class="link-group">
             <a href="/create.htm">Create an Account</a>
         </div>
     </div>
 
-    <script>
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username && password) {
-                // Handle login logic here
-                alert(`Logging in with Username: ${username}`);
-            } else {
-                alert('Please enter both username and password');
-            }
-        }
-    </script>
-    
 </body>
 </html>

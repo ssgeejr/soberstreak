@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+    <!-- JDBC DataSource for Sober Streak Application -->
+    <Resource name="jdbc/soberstreakdc"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="100"
+              maxIdle="30"
+              maxWaitMillis="10000"
+              username="tomcat"   <!-- Replace with your DB username -->
+              password="readwrite"   <!-- Replace with your DB password -->
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://ssdb:3306/soberstreak?useSSL=false&amp;serverTimezone=UTC"
+              initialSize="5"
+              maxActive="10"
+              maxIdle="5"
+              minIdle="2"
+              testOnBorrow="true"
+              validationQuery="SELECT 1" />
+
+
+</Context>
