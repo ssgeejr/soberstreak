@@ -16,7 +16,6 @@
               url="jdbc:mysql://ssdb:3306/soberstreak?useSSL=false&amp;serverTimezone=UTC"
               initialSize="5"
               maxActive="10"
-              maxIdle="5"
               minIdle="2"
               testOnBorrow="true"
               validationQuery="SELECT 1" />
