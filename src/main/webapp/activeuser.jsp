@@ -30,27 +30,26 @@
 
     if (activeUser != null) {
 %>
-    <div class="welcome-message">
-        <h1>Welcome, <%= activeUser.getName() %>!</h1>
-        <p>You have <strong><%= activeUser.getDaysSober() %></strong> days sober and have saved <strong>$<%= activeUser.getAmountSaved() %></strong> dollars.</p>
-    </div>
+     <h1>Welcome, <%= activeUser.getName() %>!</h1>
+    <p>You have <%= activeUser.getDaysSober() %> days sober and have saved $<%= activeUser.getAmountSaved() %>.</p>
 
-    <div class="milestones">
-        <h2>Your Milestones:</h2>
-        <c:forEach var="milestone" items="<%= activeUser.getMilestones() %>">
-            <div class="milestone">
-                <img src="<%= milestone.getImageUrl() %>" alt="Milestone Image">
-                <div class="milestone-details">
-                    <strong><%= milestone.getMilestoneDays() %> Days</strong>
-                    <p><%= milestone.getMilestoneMessage() %></p>
-                </div>
-            </div>
-        </c:forEach>
-
-    </div>
+    <h2>Your Milestones:</h2>
+    <ul>
+        <%
+            // Get the list of milestones and iterate over it
+            List<Milestone> milestones = activeUser.getMilestones();
+            for (Milestone milestone : milestones) {
+        %>
+            <li><%= milestone.getMilestoneDays() %> days - <%= milestone.getMilestoneMessage() %></li>
+        <%
+            } // End for loop
+        %>
+    </ul>
 <%
     } else {
-        out.println("<p>Invalid username or password.</p>");
+%>
+    <p>Invalid login. Please try again.</p>
+<%
     }
 %>
 
