@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "... pulling new changes ..."
-git pull
-
 echo "... stopping docker container UI ..."
 docker compose stop ssui
 
@@ -18,4 +15,4 @@ docker rm ssui
 echo "... redeploysing newest build ..."
 docker compose up -d ssui
 
-docker compose logs -f ssui
+#docker compose logs -f ssui

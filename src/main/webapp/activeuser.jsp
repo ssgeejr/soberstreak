@@ -8,10 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Welcome to Sober Streak</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -29,11 +28,12 @@
 
     if (activeUser != null) {
 %>
+<div class="container">
      <h1>Welcome, <%= activeUser.getName() %>!</h1>
-    <p>You have <%= activeUser.getDaysSober() %> days sober and have saved $<%= activeUser.getAmountSaved() %>.</p>
+    <p>You have <%= activeUser.getDaysSober() %> days sober and have saved <%= activeUser.getAmountSaved() %>.</p>
 
     <h2>Your Milestones:</h2>
-    <ul>
+    <ul class="milestones">
         <%
             // Get the list of milestones and iterate over it
             List<Milestone> milestones = activeUser.getMilestones();
@@ -51,6 +51,7 @@
 <%
     }
 %>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "... ATTEMPTING TO START CLEAN INSTANCE ..."
+
+docker compose up -d

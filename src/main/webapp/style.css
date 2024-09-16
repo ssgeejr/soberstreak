@@ -1,0 +1,60 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Light blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Container for the entire content */
+.container {
+    background-color: white;
+    border: 2px solid #007bff; /* Blue outer border */
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+}
+
+/* Heading styling */
+h1 {
+    color: #007bff; /* Blue text for heading */
+    margin-bottom: 20px;
+}
+
+/* Paragraph styling for sober days and money saved */
+p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+/* Milestones list styling */
+ul.milestones {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+ul.milestones li {
+    background-color: #e6f2ff; /* Soft blue background for milestone items */
+    border: 1px solid #cce0ff; /* Soft blue inner borders */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+ul.milestones li strong {
+    color: #007bff; /* Blue color for milestone days */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        width: 90%;
+    }
+}
