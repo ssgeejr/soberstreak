@@ -5,6 +5,23 @@
 <web-app>
   <display-name>SoberStreak: Opensource Sobriety Tracker</display-name>
 
+    <!-- Alias mapping for activeuser.jsp -->
+    <servlet>
+        <servlet-name>activeuser</servlet-name>
+        <jsp-file>/activeuser.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>activeuser</servlet-name>
+        <url-pattern>/activeuser</url-pattern> <!-- Alias URL -->
+    </servlet-mapping>
+
+    <!-- Custom error handling -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/</location> <!-- Redirect to root directory on 404 -->
+    </error-page>
+
       <resource-ref>
         <description>JDBC DataSource for Sober Streak</description>
         <res-ref-name>jdbc/soberstreakdc</res-ref-name>

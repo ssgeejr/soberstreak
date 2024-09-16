@@ -74,7 +74,7 @@
         <h1>Welcome to Sober Streak</h1>
         
         <!-- Wrap input fields inside a form element -->
-        <form id="loginForm" action="activeuser.jsp" method="POST">
+        <form id="loginForm" action="/activeuser" method="POST">
             <div class="input-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
