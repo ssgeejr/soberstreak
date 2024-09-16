@@ -39,7 +39,7 @@
         <h2>Your Milestones:</h2>
         <%
         System.out.println("................");
-         activeUser.getMilestones()
+         activeUser.getMilestones();
 
 
         %>
