@@ -37,12 +37,15 @@
 
     <div class="milestones">
         <h2>Your Milestones:</h2>
-        <%
-        System.out.println("................");
-         activeUser.getMilestones();
-
-
-        %>
+        <c:forEach var="milestone" items="<%= activeUser.getMilestones() %>">
+            <div class="milestone">
+                <img src="<%= milestone.getImageUrl() %>" alt="Milestone Image">
+                <div class="milestone-details">
+                    <strong><%= milestone.getMilestoneDays() %> Days</strong>
+                    <p><%= milestone.getMilestoneMessage() %></p>
+                </div>
+            </div>
+        </c:forEach>
 
     </div>
 <%
