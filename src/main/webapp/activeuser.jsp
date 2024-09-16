@@ -18,7 +18,8 @@
     // Retrieve the username and password from the request
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-
+    System.out.println("Username: " + username);
+    System.out.println("Password: " + password);
     // Attempt to validate the user
     ActiveUserItem activeUser = null;
     try {

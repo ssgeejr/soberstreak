@@ -8,6 +8,23 @@
     <version>0.4</version>
 </dependency>
 
+
+
+
+Create test data: 
+INSERT INTO users (username, name, password, email, sobriety_date, amount_per_day, validated)
+VALUES ('kalekimo', 'Kale', MD5('mypassword'), 'kale@mail.com', '2016-06-22', 22.00, 1);
+
+
+
+
+
+
+
+
+
+
+
 ''#-------------------------------------------------------------------------------#
 import org.mindrot.jbcrypt.BCrypt;
 

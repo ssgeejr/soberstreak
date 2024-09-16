@@ -31,10 +31,12 @@ public class UserLogin {
         try (Connection connection = dataSource.getConnection()) {
 
             // Query to check if the user exists with the provided username and password
+            /*
             String query = "SELECT name, sobriety_date, amount_per_day FROM users WHERE username = ? AND password = MD5(?) AND validated = 1";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
+             */
 
             ResultSet rs = stmt.executeQuery();
 
