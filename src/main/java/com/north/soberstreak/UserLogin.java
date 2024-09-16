@@ -84,7 +84,7 @@ public class UserLogin {
        Context envContext = (Context) initContext.lookup("java:/comp/env");
        dataSource = (DataSource) envContext.lookup("jdbc/soberstreakdc");
        
-       System.out.println("--------- ActiveUserItem ----------------");
+//       System.out.println("--------- ActiveUserItem ----------------");
        try (Connection connection = dataSource.getConnection()) {
 
             // Query to check if the user exists with the provided username and password
@@ -114,7 +114,7 @@ public class UserLogin {
                 List<Milestone> milestones = fetchMilestones(connection);
 
                 // Return ActiveUserItem object with user data
-                System.out.println("--- RETURNING VALUE ----");
+//                System.out.println("--- RETURNING VALUE ----");
                 
                 return new ActiveUserItem(username, name, daysSober, amountSaved, milestones);
             }
@@ -129,7 +129,7 @@ public class UserLogin {
         String query = "SELECT milestone_days, milestone_message, image_url FROM milestones where milestone_days <= ? ORDER BY milestone_days ASC";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setInt(1,soberdays);
-        ResultSet rs = stmt.executeQuery();
+        ResultSet rs = pstmt.executeQuery();
 
         List<Milestone> milestones = new ArrayList<>();
         while (rs.next()) {
