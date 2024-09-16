@@ -10,33 +10,88 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserLogin {
 
     private static DataSource dataSource;
 
     // Initialize the data source using JNDI lookup
+    /*
     static {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             dataSource = (DataSource) envContext.lookup("jdbc/soberstreakdc");
-        } catch (NamingException e) {
+            
+           
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+	*/
+    public UserLogin(){
+    	
+    }
 
     // Method to validate credentials and return an ActiveUserItem object
-    public static ActiveUserItem validateUser(String username, String password) throws SQLException {
-        // Obtain a connection from the data source
-        try (Connection connection = dataSource.getConnection()) {
+    public ActiveUserItem validateUser() throws SQLException {
+    	String username = "kalekimo";
+    	String password = "mypassword";
+        
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://bedlam:3306/soberstreak", "tomcat", "readwrite");) {
 
             // Query to check if the user exists with the provided username and password
-            /*
+            
+        	
             String query = "SELECT name, sobriety_date, amount_per_day FROM users WHERE username = ? AND password = MD5(?) AND validated = 1";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
-             */
+             
+            ResultSet rs = stmt.executeQuery();
+
+            // If user is found, proceed to calculate sobriety stats
+            if (rs.next()) {
+                String name = rs.getString("name");
+                LocalDate sobrietyDate = rs.getDate("sobriety_date").toLocalDate();
+                double amountPerDay = rs.getDouble("amount_per_day");
+
+                // Calculate days sober
+                LocalDate today = LocalDate.now();
+                long daysSober = ChronoUnit.DAYS.between(sobrietyDate, today);
+
+                // Calculate amount saved
+                double amountSaved = amountPerDay * daysSober;
+
+                // Fetch milestones
+                List<Milestone> milestones = fetchMilestones(connection);
+
+                // Return ActiveUserItem object with user data
+                return new ActiveUserItem(username, name, daysSober, amountSaved, milestones);
+            }
+
+            // If no valid user is found, return null
+            return null;
+        }
+    }
+
+ 
+
+    // Method to validate credentials and return an ActiveUserItem object
+    public static ActiveUserItem validateUser(String username, String password) throws Exception {
+        // Obtain a connection from the data source
+       Context initContext = new InitialContext();
+       Context envContext = (Context) initContext.lookup("java:/comp/env");
+       dataSource = (DataSource) envContext.lookup("jdbc/soberstreakdc");
+       try (Connection connection = dataSource.getConnection()) {
+
+            // Query to check if the user exists with the provided username and password
+            
+            String query = "SELECT name, sobriety_date, amount_per_day FROM users WHERE username = ? AND password = MD5(?) AND validated = 1";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+             
 
             ResultSet rs = stmt.executeQuery();
 
@@ -80,4 +135,6 @@ public class UserLogin {
         }
         return milestones;
     }
+
+
 }
