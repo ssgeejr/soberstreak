@@ -14,6 +14,7 @@ ADD soberstreak.war /usr/local/tomcat/webapps/
 #ADD https://repo1.maven.org/maven2/net/sourceforge/htmlcleaner/htmlcleaner/2.16/htmlcleaner-2.16.jar /usr/local/tomcat/lib/
 
 ADD server.xml /usr/local/tomcat/conf/server.xml
+ADD context.xml /usr/local/tomcat/conf/context.xml
 
 VOLUME /usr/local/tomcat/logs
 
