@@ -30,14 +30,21 @@
         </div>
 
         <div class="input-group">
+            <label for="confirmPassword">Password</label>
+            <input type="password" id="confirmPassword" required>
+            <small id="confirmPasswordError">Passwords must match.</small>
+        </div>
+
+        <div class="input-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" required>
+            <small id="emailError">Provide a valid email Address</small>
         </div>
 
         <div class="input-group">
             <label for="confirm_email">Confirm Email Address</label>
             <input type="email" id="confirm_email" required>
-            <small id="emailError">Emails do not match.</small>
+            <small id="emailConfirmError">Emails do not match.</small>
         </div>
 
         <div class="button-group">
@@ -54,6 +61,7 @@
         const username = document.getElementById('username');
         const nameField = document.getElementById('name');
         const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
         const email = document.getElementById('email');
         const confirmEmail = document.getElementById('confirm_email');
         const createAccountBtn = document.getElementById('createAccountBtn');
@@ -61,7 +69,10 @@
         const usernameError = document.getElementById('usernameError');
         const nameError = document.getElementById('nameError');
         const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
         const emailError = document.getElementById('emailError');
+        const emailConfirmError = document.getElementById('emailConfirmError');
+
 
         // Regex for password validation: at least one uppercase, one lowercase, one digit, one special char
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/;
@@ -79,18 +90,25 @@
             const isPasswordValid = passwordRegex.test(password.value);
             passwordError.style.display = isPasswordValid ? 'none' : 'block';
 
+            const isConfirmPasswordValid = password.value === confirmPassword.value;
+            confirmPasswordError.style.display = isConfirmPasswordValid ? 'none' : 'block';
+
+            const validEmailLen = email.value.length >= 6 && email.value.length < 64;
+            emailError.style.display = validEmailLen ? 'none' : 'block';
+
             // Email matching validation
             const isEmailValid = email.value === confirmEmail.value;
-            emailError.style.display = isEmailValid ? 'none' : 'block';
+            emailConfirmError.style.display = isEmailValid ? 'none' : 'block';
 
             // Enable the Create Account button if all validations pass
-            createAccountBtn.disabled = !(isUsernameValid && isNameValid && isPasswordValid && isEmailValid);
+            createAccountBtn.disabled = !(isUsernameValid && isNameValid && isConfirmPasswordValid && isEmailValid);
         }
 
         // Add event listeners to fields to validate form on input
         username.addEventListener('input', validateForm);
         nameField.addEventListener('input', validateForm);
         password.addEventListener('input', validateForm);
+        confirmPassword.addEventListener('input', validateForm);
         email.addEventListener('input', validateForm);
         confirmEmail.addEventListener('input', validateForm);
 
