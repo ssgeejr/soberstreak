@@ -2,6 +2,15 @@
 
 ### Track your sobriety date and savings
 
+
+How to install JNDI: 
+
+Get the file from: https://treebase.sourceforge.net/maven2/javax/naming/jndi/1.2.1/
+mvn install:install-file -DgroupId=javax.naming -DartifactId=jndi -Dversion=1.2.1 -Dpackaging=jar -Dfile=jndi-1.2.1.jar
+
+
+
+
 <dependency>
     <groupId>org.mindrot</groupId>
     <artifactId>jbcrypt</artifactId>

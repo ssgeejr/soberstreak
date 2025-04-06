@@ -1,0 +1,36 @@
+#!/bin/bash
+
+echo "... stopping docker container UI ..."
+docker compose stop ssui
+
+echo "... building new container ..."
+mvn clean package
+
+if [ $? -eq 0 ]; then
+  echo "mvn compile successful, building docker image and redeploying ..."
+else
+  echo "mvn compile failed, exiting..."
+  exit 1
+fi
+
+
+
+cd docker
+docker build -t soberstreak:1 .
+cd ..
+
+echo "... removing old container ..."
+docker rm ssui
+
+echo "... redeploysing newest build ..."
+docker compose up -d ssui
+
+# Check if the -l argument is present
+while getopts "l" opt; do
+  case $opt in
+    l)
+      echo "Fetching logs..."
+      docker compose logs -f ssui
+      ;;
+  esac
+done

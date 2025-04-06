@@ -1,77 +1,19 @@
 #!/bin/bash
+cd /opt/pasedb
+echo "... pulling new changes ..."
+git pull
 
-# Function to perform the full build and deploy (original behavior)
-full_build_deploy() {
-    cd /opt/pasedb
-    echo "... pulling new changes ..."
-    git pull
+echo "... stopping docker container UI ..."
+#docker-compose stop ssui
 
-    echo "... building new container ..."
-    mvn clean package
-    cd docker
-    docker build -t soberstreak:1 .
-    cd ..
+echo "... building new container ..."
+mvn clean package
+cd docker
+docker build -t soberstreak:1 .
+cd ..
 
-    echo "... removing old container ..."
-    docker rm -f ssui 2>/dev/null || true
+echo "... removing old container ..."
+docker rm ssui
 
-    echo "... redeploying newest build ..."
-    docker run -d --name ssui soberstreak:1
-}
-
-# Function to just build
-build_only() {
-    cd /opt/pasedb
-    echo "... building new container ..."
-    mvn clean package
-    cd docker
-    docker build -t soberstreak:1 .
-    cd ..
-}
-
-# Function to stop container
-stop_container() {
-    echo "... stopping container ..."
-    docker stop ssui 2>/dev/null || true
-    docker rm ssui 2>/dev/null || true
-}
-
-# Function to start container
-start_container() {
-    echo "... starting container ..."
-    docker run -d --name ssui soberstreak:1
-}
-
-# Function to restart container
-restart_container() {
-    echo "... restarting container ..."
-    docker restart ssui 2>/dev/null || true
-}
-
-# Function to check process status
-check_status() {
-    echo "... checking container status ..."
-    docker ps -a --filter "name=ssui" --format "Container: {{.Names}} Status: {{.Status}}"
-}
-
-# Main logic based on arguments
-case "$1" in
-    "build")
-        build_only
-        ;;
-    "stop")
-        stop_container
-        ;;
-    "start")
-        start_container
-        ;;
-    "restart")
-        restart_container
-        ;;
-    "ps")
-        check_status
-        ;;
-    ""|*)
-        full_build_deploy
-        ;;
-esac
+echo "... redeploysing newest build ..."
+#docker-compose up -d ui

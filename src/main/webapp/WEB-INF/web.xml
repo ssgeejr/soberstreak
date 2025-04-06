@@ -4,6 +4,21 @@
 
 <web-app>
   <display-name>SoberStreak: Opensource Sobriety Tracker</display-name>
+    <!-- JAX-RS Configuration for Jersey -->
+    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.north.soberstreak</param-value> <!-- Your package with REST services -->
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/api/*</url-pattern> <!-- All requests starting with /api are mapped to REST -->
+    </servlet-mapping>
 
     <!-- Alias mapping for activeuser.jsp -->
     <servlet>

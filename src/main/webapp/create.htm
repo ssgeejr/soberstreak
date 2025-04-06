@@ -4,123 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - Sober Streak</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 350px;
-        }
-        .container h1 {
-            margin-bottom: 20px;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .input-group small {
-            color: red;
-            display: none;
-        }
-        .button-group {
-            margin-top: 20px;
-        }
-        .button-group button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .button-group button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        .link-group {
-            margin-top: 15px;
-        }
-        .link-group a {
-            color: #007bff;
-            text-decoration: none;
-            display: block;
-            margin-top: 10px;
-        }
-        .link-group a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
+        <form id="createAccountForm" action="/createUser.jsp" method="post">
         <h1>Create an Account</h1>
 
         <div class="input-group">
             <label for="username">Username</label>
-            <input type="text" id="username" required>
+            <input type="text" id="username" name="username" required>
             <small id="usernameError">Username must be between 8 and 24 characters.</small>
         </div>
 
         <div class="input-group">
             <label for="name">Name</label>
-            <input type="text" id="name" required>
+            <input type="text" id="name" name="name" required>
             <small id="nameError">Name must be between 12 and 32 characters.</small>
         </div>
 
         <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" id="password" required>
+            <input type="password" id="password" name="password" required>
             <small id="passwordError">Password must be at least 12 characters long, contain a number, an uppercase letter, and a special character.</small>
         </div>
 
         <div class="input-group">
+            <label for="confirmPassword">Password</label>
+            <input type="password" id="confirmPassword" required>
+            <small id="confirmPasswordError">Passwords must match.</small>
+        </div>
+
+        <div class="input-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" name="email" required>
+            <small id="emailError">Provide a valid email Address</small>
         </div>
 
         <div class="input-group">
             <label for="confirm_email">Confirm Email Address</label>
             <input type="email" id="confirm_email" required>
-            <small id="emailError">Emails do not match.</small>
+            <small id="emailConfirmError">Emails do not match.</small>
         </div>
 
         <div class="button-group">
-            <button type="button" id="createAccountBtn" disabled>Create Account</button>
+            <button type="submit" id="createAccountBtn" disabled>Create Account</button>
         </div>
 
         <div class="link-group">
             <a href="/">HOME</a>
         </div>
-
+        </form>
     </div>
 
     <script>
         const username = document.getElementById('username');
         const nameField = document.getElementById('name');
         const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
         const email = document.getElementById('email');
         const confirmEmail = document.getElementById('confirm_email');
         const createAccountBtn = document.getElementById('createAccountBtn');
@@ -128,7 +70,10 @@
         const usernameError = document.getElementById('usernameError');
         const nameError = document.getElementById('nameError');
         const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
         const emailError = document.getElementById('emailError');
+        const emailConfirmError = document.getElementById('emailConfirmError');
+
 
         // Regex for password validation: at least one uppercase, one lowercase, one digit, one special char
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{12,}$/;
@@ -138,33 +83,37 @@
             const isUsernameValid = username.value.length >= 8 && username.value.length <= 24;
             usernameError.style.display = isUsernameValid ? 'none' : 'block';
 
-            // Name validation: between 12 and 32 characters
-            const isNameValid = nameField.value.length >= 12 && nameField.value.length < 32;
+            // Name validation: between 6 and 32 characters
+            const isNameValid = nameField.value.length >= 6 && nameField.value.length < 32;
             nameError.style.display = isNameValid ? 'none' : 'block';
 
             // Password validation: at least 12 characters, a number, an uppercase letter, and a special character
             const isPasswordValid = passwordRegex.test(password.value);
             passwordError.style.display = isPasswordValid ? 'none' : 'block';
 
+            const isConfirmPasswordValid = password.value === confirmPassword.value;
+            confirmPasswordError.style.display = isConfirmPasswordValid ? 'none' : 'block';
+
+            const validEmailLen = email.value.length >= 6 && email.value.length < 64;
+            emailError.style.display = validEmailLen ? 'none' : 'block';
+
             // Email matching validation
             const isEmailValid = email.value === confirmEmail.value;
-            emailError.style.display = isEmailValid ? 'none' : 'block';
+            emailConfirmError.style.display = isEmailValid ? 'none' : 'block';
 
             // Enable the Create Account button if all validations pass
-            createAccountBtn.disabled = !(isUsernameValid && isNameValid && isPasswordValid && isEmailValid);
+            createAccountBtn.disabled = !(isUsernameValid && isNameValid && isConfirmPasswordValid && isEmailValid);
         }
 
         // Add event listeners to fields to validate form on input
         username.addEventListener('input', validateForm);
         nameField.addEventListener('input', validateForm);
         password.addEventListener('input', validateForm);
+        confirmPassword.addEventListener('input', validateForm);
         email.addEventListener('input', validateForm);
         confirmEmail.addEventListener('input', validateForm);
 
-        // Handle create account button click (for demonstration purposes)
-        createAccountBtn.addEventListener('click', function() {
-            alert('Account created successfully!');
-        });
+
     </script>
 
 </body>
