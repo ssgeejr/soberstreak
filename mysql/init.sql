@@ -15,13 +15,14 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (name,email,validated,username,password,sobriety_date) VALUES (
+INSERT INTO users (name,email,validated,username,password,sobriety_date,amount_per_day) VALUES (
     'Peoples',
     'peoples@mail.com',
     1,
     'peoples',
     'mypassword',
-    '2016-06-22'
+    '2016-06-22',
+    22.00
 );
 
 CREATE TABLE milestones (
