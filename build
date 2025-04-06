@@ -2,7 +2,6 @@
 
 # Function to perform the full build and deploy (original behavior)
 full_build_deploy() {
-    cd /opt/pasedb
     echo "... pulling new changes ..."
     git pull
 
@@ -21,7 +20,6 @@ full_build_deploy() {
 
 # Function to just build
 build_only() {
-    cd /opt/pasedb
     echo "... building new container ..."
     mvn clean package
     cd docker
