@@ -9,7 +9,7 @@ full_build_deploy() {
     mvn clean package
     if [ $? -ne 0 ]; then
         echo ""
-        echo "\e[31mError: Java compilation failed (mvn clean package). Aborting build process."
+        echo -e "\e[31mError: Java compilation failed (mvn clean package). Aborting build process.\e[0m"
         exit 1
     fi
     cd docker
