@@ -48,7 +48,7 @@
 <%
     } else {
 %>
-    <p>Invalid login. Please try again.</p>
+    <p><br>Invalid login. Please try again.</p>
 <%
     }
 %>

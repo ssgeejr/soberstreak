@@ -40,6 +40,7 @@ public class UserLogin {
        Context initContext = new InitialContext();
        Context envContext = (Context) initContext.lookup("java:/comp/env");
        dataSource = (DataSource) envContext.lookup("jdbc/soberstreakdc");
+
        
 //       System.out.println("--------- ActiveUserItem ----------------");
        try (Connection connection = dataSource.getConnection()) {
@@ -89,6 +90,8 @@ public class UserLogin {
 
             // If no valid user is found, return null
             return null;
+        }catch(Exception ex){
+            ex.printStackTrace()
         }
     }
 

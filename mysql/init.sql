@@ -20,7 +20,7 @@ INSERT INTO users (name,email,validated,username,password,sobriety_date,amount_p
     'peoples@mail.com',
     1,
     'peoples',
-    'mypassword',
+    MD5('mypassword'),
     '2016-06-22',
     22.00
 );
