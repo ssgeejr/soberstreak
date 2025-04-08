@@ -8,6 +8,7 @@ full_build_deploy() {
     echo "... building new container ..."
     mvn clean package
     if [ $? -ne 0 ]; then
+        echo ""
         echo "\e[31mError: Java compilation failed (mvn clean package). Aborting build process."
         exit 1
     fi
