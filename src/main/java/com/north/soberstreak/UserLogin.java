@@ -91,7 +91,7 @@ public class UserLogin {
             // If no valid user is found, return null
             return null;
         }catch(Exception ex){
-            ex.printStackTrace()
+            ex.printStackTrace();
         }
     }
 
