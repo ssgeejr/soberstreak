@@ -19,6 +19,4 @@
               minIdle="2"
               testOnBorrow="true"
               validationQuery="SELECT 1" />
-
-
 </Context>
