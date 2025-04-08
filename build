@@ -7,6 +7,10 @@ full_build_deploy() {
 
     echo "... building new container ..."
     mvn clean package
+    if [ $? -ne 0 ]; then
+        echo "Error: Java compilation failed (mvn clean package). Aborting build process."
+        exit 1
+    fi
     cd docker
     docker build -t soberstreak:1 .
     cd ..
