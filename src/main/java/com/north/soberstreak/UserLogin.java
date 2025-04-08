@@ -92,6 +92,7 @@ public class UserLogin {
             return null;
         }catch(Exception ex){
             ex.printStackTrace();
+            throw ex;
         }
     }
 
