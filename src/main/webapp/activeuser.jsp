@@ -21,7 +21,6 @@
     // Attempt to validate the user
     ActiveUserItem activeUser = null;
     try {
-        out.println("LOGIN CREDS: " + username + " ** " + password);
         activeUser = UserLogin.validateUser(username, password);
     } catch (Exception e) {
         out.println("Error: " + e.getMessage());
