@@ -15,15 +15,8 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (name,email,validated,username,password,sobriety_date,amount_per_day) VALUES (
-    'Peoples',
-    'peoples@mail.com',
-    1,
-    'peoples',
-    MD5('mypassword'),
-    '2016-06-22',
-    22.00
-);
+INSERT INTO users (name, email, validated, username, password, sobriety_date, amount_per_day)
+VALUES ('Peoples Name', 'peoples@example.com', 1, 'peoples', MD5('mypassword'), '2025-04-08', 0.00);
 
 CREATE TABLE milestones (
     milestone_id INT AUTO_INCREMENT PRIMARY KEY,
